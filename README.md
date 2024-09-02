@@ -10,7 +10,7 @@ Este proyecto, desarrollado como parte de la asignatura de Redes Neuronales y Al
 
 ## Instalación
 
-No se requiere ninguna instalación especial para visualizar el contenido del proyecto. Simplemente sigue los enlaces proporcionados en la sección de Contenido para acceder a las diferentes partes del proyecto.
+No se requiere ninguna instalación especial para visualizar el contenido del proyecto.
 
 Para visualizar la page del trabajo se puede dirigir al siguiente site: https://paulandreatj.github.io/healthy-road/
 
