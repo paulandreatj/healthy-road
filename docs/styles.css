@@ -1,0 +1,12 @@
+ul {
+  list-style-type: none;
+}
+
+#div-centrado {
+  text-align: center;
+}
+
+#div-centrado img {
+  display: block;
+  margin: auto;
+}
