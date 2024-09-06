@@ -9,6 +9,577 @@
 <body>
     <p><a href="index.html">&laquo; Índice</a></p>
     <h1>Bases de Datos</h1>
+    <p>La instancia de base de datos usada estará soportada por Google Cloud Storage mostrado en la Tabla 3 
+        del primer informe <a href="referencias.html#ref4">[4]</a>. Allí, estarán cada una de las tablas donde estará la información relevante del cliente y las salidas otorgadas por la API.
+    </p>
+    <h3>Registrar usuario a Health Road App</h3>
+    <p>
+        <ul>
+            <li>El usuario está en la página de Blue Host.</li>
+            <li>Pulsa click en registrarse.</li>
+            <li>Ingresa su Email y contraseña.</li>
+            <li>La solicitud es recibida por un usuario administrador que valida los datos. Este hace uso de la API: 
+                healthyroad/input/createUser y quedan los datos guardados en la tabla UsuarioRegistrado, como se muestra en Figura F1.</li>
+        </ul>
+    </p>
+    <div id="div-centrado">
+        <p><b>Figura F1.</b> Ejemplo de registros de tabla UsuarioRegistrado.</p>
+        <table border="1" cellpadding="10">
+            <tr>
+                <th>strEmail</th>
+                <th>strContraseña</th>
+                <th>intActivo</th>
+                <th>dtmFechaCreacion</th>
+            </tr>
+            <tr>
+                <td>dmol@una</td>
+                <td>*****</td>
+                <td>1</td>
+                <td>2024-04-12 11:59:59</td>
+            </tr>
+            <tr>
+                <td>ana@gma</td>
+                <td>*******</td>
+                <td>0</td>
+                <td>2023-05-21 11:59:59</td>
+            </tr>
+            <tr>
+                <td>gbc@hotma</td>
+                <td>*************</td>
+                <td>0</td>
+                <td>08/05/2022 11:30:59</td>
+            </tr>
+            <tr>
+                <td>...</td>
+                <td>...</td>
+                <td>...</td>
+                <td>...</td>
+            </tr>
+            <tr>
+                <td>zzz@outlo</td>
+                <td>***********</td>
+                <td>1</td>
+                <td>2021-05-12 12:01:43</td>
+            </tr>
+        </table>
+    </div>
+
+    <h3>Comprar licencias de Healthy Road App</h3>
+    <p>
+        <ul>
+            <li>El usuario está en la página alojada en Bluehost.</li>
+            <li>El usuario se loguea.</li>
+            <li>El Usuario pulsa click a una de las 4 opciones de licencias.</li>
+            <li>Realiza el proceso de pago disponible.</li>
+            <li>Recibe una confirmación vía correo electrónico.</li>
+        </ul>
+        <p>Para realizar un registro exitoso, se deben añadir los datos a una tabla Adquisición. Dicha tabla usa la información del Pago, 
+            que es un registro de transacción exitosa que lo asocia a una licencia. El usuario que realizó el pago, junto con la licencia asociada 
+            al pago, construye el registro de la tabla Adquisición que se muestra en Figura F4. Además, en Figura F3 y Figura F2  se muestran aquellas 
+            tablas que reflejan el Pago y Licencia.</p>
+    </p>
+    <div id="div-centrado">
+        <p><b>Figura F2.</b> Ejemplo de registros de tabla Licencia.</p>
+        <table border="1" cellpadding="10">
+            <tr>
+                <th>intIdLicencia</th>
+                <th>strNombre</th>
+                <th>strPeriodicidad</th>
+                <th>moneyPrecio</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Individual1</td>
+                <td>Mensual</td>
+                <td>218,49</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Individual2</td>
+                <td>Anual</td>
+                <td>2279,99</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Empresarial1</td>
+                <td>Mensual</td>
+                <td>807,49</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Empresarial2</td>
+                <td>Anual</td>
+                <td>9689,49</td>
+            </tr>
+        </table>
+        <p><b>Figura F3.</b> Ejemplo de registros de tabla Pago.</p>
+        <table border="1" cellpadding="10">
+            <tr>
+                <th>intIdPago</th>
+                <th>dtmFechaTransaccion</th>
+                <th>intIdLicencia</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>2024-04-12 11:59:59</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>08/05/2022 11:30:59</td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>2024-04-12 11:59:59</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>2023-05-21 11:59:59</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>...</td>
+                <td>...</td>
+                <td>...</td>
+            </tr>
+            <tr>
+                <td>N</td>
+                <td>08/05/2022 11:30:59</td>
+                <td>1</td>
+            </tr>
+        </table>
+        <p><b>Figura F4.</b> Ejemplo de registros de tabla Adquisición.</p>
+        <table border="1" cellpadding="10">
+            <tr>
+                <th>intIdPago</th>
+                <th>strEmail</th>
+                <th>dtmFechaInicio</th>
+                <th>dtmFechaFinalizacion</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>dmol@una</td>
+                <td>2024-04-14 11:59:59</td>
+                <td>2024-05-14 11:59:59</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>ana@gma</td>
+                <td>2023-05-23 11:59:59</td>
+                <td>2023-06-22 11:59:59</td>
+            </tr>
+            <tr>
+                <td>...</td>
+                <td>...</td>
+                <td>...</td>
+                <td>...</td>
+            </tr>
+            <tr>
+                <td>N</td>
+                <td>gbc@hotma</td>
+                <td>10/05/2022 11:30:59</td>
+                <td>09/06/2022 11:30:59</td>
+            </tr>
+        </table>
+    </div>
+
+    <h3>Subir una foto a Healthy Road App.</h3>
+    <p>
+        <ul>
+            <li>El usuario, estándo en la app de Healthy Road, toma o selecciona fotos para procesar.</li>
+            <li>El usuario hace click en Upload.</li>
+            <li>La app web se conecta a la API mostrada en el primer informe Prototipo. Figura 1. <a href="referencias.html#ref4">[4]</a> 
+                y formateará la información dada en el raw indicado en dicha figura.</li>
+            <li>El sistema guardará un registro de la API usada en Consulta API y de los datos procesados y guardado en la instancia de Google, en ImagenEntrada.</li>
+        </ul>
+        <p>Para ser efectivo dicho registro, se requiere la información del usuario registrado, ya que este se relaciona con las fotos enviadas. 
+            Además, de las rutas a las que se accede, ya que se cuenta con una tabla que contiene todas las rutas. Estas se pueden observar en Figura F5, 
+            Figura F6 y Figura F7, respectivamente.
+        </p>
+    </p>
+    <div id="div-centrado">
+        <p><b>Figura F5.</b> Ejemplo de registros de tabla ImagenEntrada.</p>
+        <table border="1" cellpadding="10">
+            <tr>
+                <th>intIdImagenEntrada</th>
+                <th>strEmail</th>
+                <th>strNombreArchivo</th>
+                <th>decWidth</th>
+                <th>decHeight</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>dmol@una</td>
+                <td>China_Drone_000000.jpg</td>
+                <td>640</td>
+                <td>640</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>ana@gma</td>
+                <td>ViaAlSol.jpg</td>
+                <td>500</td>
+                <td>500</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>zzz@outlo</td>
+                <td>La19.png</td>
+                <td>1980</td>
+                <td>900</td>
+            </tr>
+            <tr>
+                <td>...</td>
+                <td>...</td>
+                <td>...</td>
+                <td>...</td>
+            </tr>
+            <tr>
+                <td>N</td>
+                <td>gbc@hotma</td>
+                <td>78sur.png</td>
+                <td>350</td>
+                <td>350</td>
+            </tr>
+        </table>
+    </div>
+    <p>En Figura F5 observamos que un usuario puede ingresar varias imágenes, y cada envío es un registro nuevo. 
+        Además, se guarda los datos de la resolución de la imagen, ya que es útil para el preprocesamiento de la imagen antes de ingresar los 
+        datos a ser evaluados por el modelo.
+    </p>
+    <div id="div-centrado">
+        <p><b>Figura F6.</b> Ejemplo de registros de tabla RequestAPI.</p>
+        <table border="1" cellpadding="10">
+            <tr>
+                <th>strRoute</th>
+            </tr>
+            <tr>
+                <td>healthyroad/input/upload</td>
+            </tr>
+            <tr>
+                <td>healthyroad/output/downloadcsv</td>
+            </tr>
+            <tr>
+                <td>healthyroad/input/createUser</td>
+            </tr>
+            <tr>
+                <td>healthyroad/input/updateUser</td>
+            </tr>
+            <tr>
+                <td>healthyroad/input/createProcurement</td>
+            </tr>
+            <tr>
+                <td>healthyroad/input/updateProcurement</td>
+            </tr>
+            <tr>
+                <td>healthyroad/output/createResults</td>
+            </tr>
+        </table>
+
+        <p><b>Figura F7.</b> Ejemplo de registros de tabla ConsultaAPI.</p>
+        <table border="1" cellpadding="10">
+            <tr>
+                <th>intIdConsulta</th>
+                <th>strEmail</th>
+                <th>strRoute</th>
+                <th>dtmFechaUso</th>
+                <th>intEstadoResponse</th>
+                <th>strResponse</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>dmol@una</td>
+                <td>healthyroad/input/upload</td>
+                <td>2024-09-03 18:02:00</td>
+                <td>200</td>
+                <td>{
+                    "status": 200,
+                    "message": Track created in Ruta table
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>ana@gma</td>
+                <td>healthyroad/input/upload</td>
+                <td>2021-12-08 18:02:00</td>
+                <td>404</td>
+                <td>{
+                    "status": 404
+                    "message": Page not found
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>...</td>
+                <td>...</td>
+                <td>...</td>
+                <td>...</td>
+                <td>...</td>
+            </tr>
+            <tr>
+                <td>N</td>
+                <td>admon@healthyroad</td>
+                <td>healthyroad/input/createUser</td>
+                <td>2019-03-14 18:02:00</td>
+                <td>200</td>
+                <td>{
+                    "status": 200,
+                    "message": User created in UsuarioRegistrado table
+                    }
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <h3>Establecer el tramo y vía de cada foto.</h3>
+    <p>
+        <ul>
+            <li>El usuario acaba de subir las imágenes por medio de la API.</li>
+            <li>Basados en la latitud y longitud, se ubicará dicha foto en google maps para acceder al nombre de la vía, 
+                asociada a la calle o avenida en que fue tomada la foto.
+            </li>
+            <li>El tramo será tomado basado en un preprocesamiento previo de la imagen teniendo presente el tamaño de la carretera y lo que se 
+                ha dado en la foto. Dicho tramo, serán dos valores enteros que indican los kilómetros iniciales de la vía y los kilómetros finales.</li>
+            <li>El sistema, con la información de la vía, teniendo presente que una vía puede tener muchos tramos, se establece la relación entre la 
+                imagen de entrada y el tramo, a través de un registro en Ruta</li>
+        </ul>
+        <p>En Figura F8, muestra un ejemplo de los valores de los registros de la tabla Vía, en Figura F9 se muestra tanto la 
+            creación de los valores de tramo, como su relación con los valores de Vía y en Figura F10 se muestra la relación entre este último 
+            registro y la imagen que fue mandada.
+        </p>
+    </p>
+    <div id="div-centrado">
+        <p><b>Figura F8.</b> Ejemplo de registros de tabla Vía.</p>
+        <table border="1" cellpadding="10">
+            <tr>
+                <th>intIdVia</th>
+                <th>strNombre</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>LA 30</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Avenida Las Vegas</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Calle 78 sur</td>
+            </tr>
+            <tr>
+                <td>...</td>
+                <td>...</td>
+            </tr>
+            <tr>
+                <td>N</td>
+                <td>Troncal 4 Transv 2</td>
+            </tr>
+        </table>
+
+        <p><b>Figura F9.</b> Ejemplo de registros de tabla Tramo.</p>
+        <table border="1" cellpadding="10">
+            <tr>
+                <th>intIdTramo</th>
+                <th>intIdVia</th>
+                <th>strLatitud</th>
+                <th>strLongitud</th>
+                <th>decKmInicio</th>
+                <th>decKmFinal</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>1</td>
+                <td>40,7128° N</td>
+                <td>74,0060° W</td>
+                <td>0</td>
+                <td>15</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>1</td>
+                <td>40,7129° N</td>
+                <td>74,0060° W</td>
+                <td>5,558</td>
+                <td>10</td>
+            </tr>
+            <tr>
+                <td>...</td>
+                <td>...</td>
+                <td>...</td>
+                <td>...</td>
+                <td>...</td>
+            </tr>
+            <tr>
+                <td>N</td>
+                <td>3</td>
+                <td>Latitud° N</td>
+                <td>Longitud° W</td>
+                <td>12,18</td>
+                <td>100,18</td>
+            </tr>
+        </table>
+
+        <p><b>Figura F10.</b> Ejemplo de registros de tabla Ruta.</p>
+        <table border="1" cellpadding="10">
+            <tr>
+                <th>idRuta</th>
+                <th>intIdImagenEntrada</th>
+                <th>idTramo</th>
+                <th>dtmFechaInicio</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>2024-09-03 18:02:00</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>1</td>
+                <td>2</td>
+                <td>2024-09-03 18:02:00</td>
+            </tr>
+            <tr>
+                <td>...</td>
+                <td>...</td>
+                <td>...</td>
+            </tr>
+            <tr>
+                <td>N</td>
+                <td>4</td>
+                <td>1</td>
+                <td>2024-09-03 18:02:00</td>
+            </tr>
+        </table>
+    </div>
+
+    <h3>Mostrar salud de cada vía, información detallada de cada tramo por vía, proporción de daños en un tramo.</h3>
+    <p>La imagen será procesada por modelo, obteniendo unos resultados. Las partes de este conjunto de resultados son usados 
+        por varios requisitos funcionales, dependiendo el requerimiento, se destinan dichos valores. Esto se puede mostrar en Tabla T1.
+    </p>
+    <div id="div-centrado">
+        <p><b>Tabla T1.</b> Valores requeridos para satisfacer cada requisito.</p>
+        <table border="1" cellpadding="10">
+            <tr>
+                <th>Requisito Funcional</th>
+                <th>Valores requeridos</th>
+            </tr>
+            <tr>
+                <td>Salud de cada vía</td>
+                <td>Proporción de salud de los tramos de una vía promediada.</td>
+            </tr>
+            <tr>
+                <td>Información detallada de cada tramo</td>
+                <td>Latitud, Longitud, Rango en KM y salud: Complemento de la proporción de daños totales.</td>
+            </tr>
+            <tr>
+                <td>Proporción de daños de un tramo</td>
+                <td>Proporción de tipos de daños encontrados en el tramo.</td>
+            </tr>
+        </table>
+    </div>
+    <p>Para lograr lo anterior, se establecen las siguientes secuencias de acciones:
+        <ul>
+            <li>El usuario debió hacer uso de la API para cargar las fotos.</li>
+            <li>El sistema procesa las fotos para ponerlas a disposición del modelo.</li>
+            <li>Por cada imagen, el modelo lo evalúa y recibe un conjunto de resultados:</li>
+            <ul>
+                <li>Una Imagen, que es la imagen de entrada junto con bounding boxes de los daños junto con su clasificación. 
+                    Esta tendrá como nomenclatura <i>NombreVia_KmInicialKmFinal_yyyyMMdd_hhmmss.jpg</i>.
+                </li>
+                <li>Un valor entre 0 y 1 que indica la proporción de salud, tendrá como máximo 4 cifras de precisión.</li>
+                <li>Una cadena de texto con el conteo de tipos de daños por tramo.</li>
+                <li>Un json con la proporción de tipos de daños encontrados en el tramo.</li>
+                <li>Una cadena que contiene un objeto de pytorch llamado tensor [8] que lleva consigo una lista de los bounding 
+                    boxes encontrados en la imagen de la forma (x,y,w,h).
+                </li>
+                <li>Una cadena que contiene un objeto de tipo tensor de pytorch que lleva consigo valores de la forma “Daño:
+                     Valor de nivel de confianza”, donde el valor de nivel de confianza está entre 0 y 1.
+                </li>
+            </ul>
+        </ul>
+        Dichos valores, estarán registrados en la base de datos por medio de Salida, que tendrá una relación 1:Muchos con los registros de la tabla ruta, 
+        asegurando así que cada salida estará asociada a una ruta registrada por el cliente, esto se observa en Figura F11.
+    </p>
+    <div id="div-centrado">
+        <p><b>Figura F11.</b> Ejemplo de valores de la tabla Salida.</p>
+        <table border="1" cellpadding="10">
+            <tr>
+                <th>intIdSalida</th>
+                <th>intIdRuta</th>
+                <th>strNombreArchivo</th>
+                <th>decProporcionSalud</th>
+                <th>strConteoDanios</th>
+                <th>strListaBboxes</th>
+                <th>strListaDanios</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>1</td>
+                <td>LA30_015_20240903_180219.jpg</td>
+                <td>0,8189</td>
+                <td>lateral linear crack: 2, logitudinal linear crack: 4</td>
+                <td>tensor([[302.5146, 393.6874, 365.0001, 454.2715],
+                    [159.7895, 144.3640, 253.4789, 206.1899],
+                    [ 85.4473, 147.7695, 251.3011, 255.1067],
+                    [300.1420, 323.2867, 506.2996, 346.4134],
+                    [588.4741, 214.7938, 787.2733, 241.5430],
+                    [253.4324, 117.0283, 294.9510, 149.8011]])
+                </td>
+                <td>"['D00: 0.69', 'D00: 0.78', 'D00: 0.70', 'D10: 0.61', 'D10: 0.73', 'D00: 0.87']"</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>2</td>
+                <td>LA30_610_20240904_100118.jpg</td>
+                <td>0,8507</td>
+                <td>Bump, pothole or separation: 4</td>
+                <td>tensor([[ 85.4473, 147.7695, 251.3011, 255.1067],
+                    [588.4741, 214.7938, 787.2733, 241.5430]])
+                </td>
+                <td>"['D40: 0.71', 'D40: 0.98', 'D40: 0.86', 'D40: 0.68']"</td>
+            </tr>
+            <tr>
+                <td>...</td>
+                <td>...</td>
+                <td>...</td>
+                <td>...</td>
+                <td>...</td>
+            </tr>
+            <tr>
+                <td>N</td>
+                <td>7</td>
+                <td>AvenidaLasVegas_021_20240904_100238.jpg</td>
+                <td>0,9004</td>
+                <td>lateral linear crack: 2, logitudinal linear crack: 4</td>
+                <td>tensor([[ 85.4473, 147.7695, 251.3011, 255.1067],
+                    [588.4741, 214.7938, 787.2733, 241.5430]])
+                </td>
+                <td>"['D00: 0.69', 'D00: 0.78', 'D00: 0.70', 'D10: 0.61', 'D10: 0.73', 'D00: 0.87']"</td>
+            </tr>
+        </table>
+    </div>
+
+    <h3>Descargar tabla con información detallada de la salud de los tramos.</h3>
+    <p>
+        <ul>
+            <li>El usuario está en el tablero del detalle de tramos por una vía en específico.</li>
+            <li>El usuario pulsa click en “Download CSV”.</li>
+            <li>El sistema realiza un vistazo a la vista por medio de una query a la base de datos utilizando la información de las siguientes tablas:</li>
+            <ul>
+                <li>Vía: Nombre de la Vía.</li>
+                <li>Tramo: Ubicación de cada tramo con el formato (Latitud, Longitud).</li>
+                <li>Rango: Con el formato KmInicial - Km Final.</li>
+                <li>Salida: Proporción de salud.</li>
+                <li>Salida: Cadena de texto que contiene el conteo de daños de cada tipo.</li>
+            </ul>
+        </ul>
+    </p>
+    
     <p><a href="index.html">&laquo; Índice</a></p>
 </body>
 </html>
