@@ -1,14 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>Modelo</title>
 </head>
+
 <body>
     <p><a href="index.html">&laquo; Índice</a></p>
     <h1>Modelo</h1>
     <p><a href="index.html">&laquo; Índice</a></p>
+
+    <h2>¿De dónde sacamos los datos de entrenamiento?</h2>
+    <p>
+        En esta sección se muestran los notebooks utilizados para realizar la prueba de concepto de nuestra aplicación.<br>
+        <br>
+        La prueba de concepto consiste, en dada una imagen de una carretera, poder reconocer sus daños.
+        Hay muchos tipos de daños, pero vamos a reconocer solo 4 tipos:<br>
+        - D00: Grieta longitudinal (Longitudinal Crack)<br>
+        - D10: Grieta transversal (Transverse Crack)<br>
+        - D20: Grieta de piel de cocodrilo (Alligator Crack)<br>
+        - D40: Huecos (Potholes)<br>
+        <br>
+        La data de entrenamiento la obtuvimos de un evento a nivel mundial, que es llevado a cabo en forma de reto y su
+        nombre es Crowdsensing-based Road Damage Detection Challenge (CRDDC2022). El propósito de este evento es
+        reunir competidores que logren detectar daños en carreteras en todo el mundo, con el objetivo de mitigar la
+        incapacidad y altos costos que esta tarea le puede acarrear a los gobiernos. Más información se puede encontrar 
+        en su sitio web en el siguiente <a href="https://crddc2022.sekilab.global/overview/">link</a>. La data de 
+        entrenamiento está disponible en este <a href=https://crddc2022.sekilab.global/data />enlace</a>.<br>
+        <br>
+
+        Los datos de entrenamiento están estructurados como se muestra en la siguiente tabla:
+
+    <table>
+        <thead>
+            <tr>
+                <th>Country</th>
+                <th>Training images</th>
+                <th>Test images</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>India</td>
+                <td>9000</td>
+                <td>1000</td>
+            </tr>
+            <tr>
+                <td>Japan</td>
+                <td>10000</td>
+                <td>1000</td>
+            </tr>
+            <tr>
+                <td>Czech Republic</td>
+                <td>2000</td>
+                <td>1000</td>
+            </tr>
+            <tr>
+                <td>Norway</td>
+                <td>9000</td>
+                <td>1000</td>
+            </tr>
+            <tr>
+                <td>United States</td>
+                <td>5000</td>
+                <td>1000</td>
+            </tr>
+            <tr>
+                <td>China</td>
+                <td>3500</td>
+                <td>1000</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>¿Cómo lo hicimos?</h2>
+    Ahora veamos los notebooks: <br>
+
+    <a href="/code/Entrenamiento/trainingHealthyRoad.html">Preprocesamiento y entrenamiento</a>
+    <br>
+    <a href="/code/Funcionamiento/functionalHealthyRoad.html">Funcionamiento y pruebas del modelo</a>
+
+    </p>
+
 </body>
+
 </html>
