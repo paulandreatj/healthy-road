@@ -9,7 +9,6 @@
 <body>
     <p><a href="index.html">&laquo; Índice</a></p>
     <h1>Análisis de Requisitos</h1>
-    <p><a href="index.html">&laquo; Índice</a></p>
 
     <h1>Título de la Tabla</h1>
 
@@ -38,47 +37,113 @@
         </tr>
         <tr>
             <td>R3</td>
-            <td>Dato 3B</td>
-            <td>Dato 3C</td>
+            <td>Mostrar opciones para pagar licencias.</td>
+            <td>La página alojada en Bluehost estará conectada a la <br>
+                API de la aplicación, donde podrá acceder a la <br>
+                información de las licencias.</td>
         </tr>
         <tr>
             <td>R4</td>
-            <td>Dato 4B</td>
-            <td>Dato 4C</td>
+            <td>Subir una foto a Healthy Road App</td>
+            <td>En la app web, una vez el usuario haya accedido a una <br>
+                licencia, estará disponible la API para subir imágenes. <br>
+                No es nuestra responsabilidad el cómo se toman las <br>
+                imágenes. La imagen se sube en formato Base64 según la<br>
+                Figura 1 del trabajo anterior <a href="referencias.html#ref4">[2]</a>. El servicio web <br>
+                retorna una respuesta http con código 202, que significa <br>
+                aceptado. La información que llega es almacenada en el <br>
+                modelo de datos de MySql, dicho modelo está disponible <br>
+                en el siguiente link.</td>
         </tr>
         <tr>
             <td>R5</td>
-            <td>Dato 5B</td>
-            <td>Dato 5C</td>
+            <td>Procesamiento de imágenes de forma asíncrona</td>
+            <td>En la app web, una vez subida la foto, las imágenes serán <br>
+                 procesadas de forma asíncrona y se actualizará el modelo <br>
+                 de datos con la clasificación hecha por el modelo de IA <br>
+                 basado en la arquitectura de transformers para imágenes <br>
+                 con fine tuning.</td>
         </tr>
         <tr>
             <td>R6</td>
-            <td>Dato 6B</td>
-            <td>Dato 6C</td>
+            <td>Hacer Dashboard general Figura 3   <a href="referencias.html#ref4">[4]</a> entrega <br>
+                anterior. 
+            </td>
+            <td>Basados en el id de la vía que vino en el request, ilustrado <br>
+                 en la Figura 1  del trabajo anterior [4], se crearán <br>
+                 las barras de salud de la siguiente forma: <br>
+                 <br>
+                1. El modelo de IA nos dará una clasificación <br>
+                de salud y defectos de cada imagen procesada.<br>
+                <br>
+                2. La salud de cada vía se hará calculando un<br>
+                 porcentaje de salud o defecto, utilizando <br>
+                 todas las vías asociadas al id del request.<br>
+                 <br>
+                3. Dicho cálculo se renderiza en forma de <br>
+                tabla en el Dashboard General.
+                </td>
         </tr>
         <tr>
             <td>R7</td>
-            <td>Dato 7B</td>
-            <td>Dato 7C</td>
+            <td>Mostrar vista detallada de una vía Figura 4 <br>
+                entrega anterior <a href="referencias.html#ref4">[4]</a>. 
+            </td>
+            <td>La imagen será procesada por modelo, obteniendo unos <br>
+                resultados. Entre estos, estará  la cantidad de daños <br>
+                encontrados y su área superficial mostrado en la imagen. <br>
+                Basado en dicha área y una aproximación del área de la <br>
+                carretera, se calculará la proporción de salud del tramo <br>
+                otorgado, promediando los hasta obtener la proporción de<br>
+                 salud de la vía. <br>
+                 <br>
+                Para crear la vista detallada, para calcular los tramos <br>
+                de kilómetro, se utilizará el campo de location que contiene<br>
+                la latitud y longitud y mediante un algoritmo y librerías <br>
+                de geolocalización, se determinará qué imágen pertenece a <br>
+                cuál tramo (ej. km 0-5) y así poder ordenar los rangos y <br>
+                su clasificación.</td>
         </tr>
         <tr>
             <td>R8</td>
-            <td>Dato 8B</td>
-            <td>Dato 8C</td>
+            <td>Mostrar vista de clasificación Figura 5 entrega <br>
+                anterior <a href="referencias.html#ref4">[4]</a>.
+            </td>
+            <td>Cada imagen será procesada por modelo, obteniendo resultados <br>
+                 de clasificación. Entre estos, está el tipo de daño <br>
+                 encontrado y su concurrencia. Con dicho dato se calculará  <br>
+                 la proporción de tipos de daños encontrados, dado la cantidad <br>
+                  total de estos y se mostrará en un gráfico de torta. Este <br>
+                   gráfico agrupará todas las imágenes pertenecientes a un <br>
+                   mismo rango de kilómetros (ej. km 10-15).</td>
         </tr>
         <tr>
             <td>R9</td>
-            <td>Dato 9B</td>
-            <td>Dato 9C</td>
+            <td>Descargar tabla con información detallada de la <br>
+                salud de los tramos. Figura 4 entrega anterior <a href="referencias.html#ref4">[4]</a>, <br>
+                en botón Download CSV.</td>
+            <td>La imagen será procesada por modelo, obteniendo unos <br>
+                resultados. Reuniendo todos los resultados y la información <br>
+                de entrada recolectada, se entregará un documento .csv, <br>
+                con lo encabezados: Nombre de la vía, Ubicación de cada tramo,<br>
+                Rango, proporción de salud y una cadena de texto que contiene<br>
+                la cantidad de daños de cada tipo encontrado.</td>
         </tr>
         <tr>
             <td>R10</td>
-            <td>Dato 10B</td>
-            <td>Dato 10C</td>
+            <td>Ordenar resultados de Dashboard General. <br>
+                Figura 3 entrega anterior <a href="referencias.html#ref4">[4]</a>, en botón <br>
+                Ordenar por</td>
+            <td>Se podrá ordenar los resultados del Dashboard general para <br>
+                visualizar de mayor a menor y viceversa, las vías según<br>
+                su porcentaje de salud. Esto para facilitar a los clientes<br>
+                de la app la priorización de intervención en las vías que<br>
+                más lo necesitan.</td>
         </tr>
     </table>
 
 
+    <p><a href="index.html">&laquo; Índice</a></p>
 
 </body>
 </html>
