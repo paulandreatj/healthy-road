@@ -89,6 +89,14 @@
         </li>
 
     </ol>
+    <br>
+    <p>Se puede apreciar la arquitectura de ViT en la siguiente imagen, sacada del paper original [10]</p>
+
+    <figure>
+        <img src="images/vit_architecture.jpg" alt="arquitectura-ViT" width="900" height="500">
+        <figcaption><strong>Arquitectura ViT</strong></figcaption>
+    </figure>
+
 
 
     <h2>YOLOS.</h2>
@@ -160,7 +168,14 @@
             </ol>
         </li>
         <br>
-        <li><strong>Backpropagation (Retropropagación) y Optimización.</strong>Con la triada de valores (Coordenadas del bounding box, clase, valor de confianza), se realiza el cálculo de los errores respectivos: desviación estándar en el centro, ancho y altura del bounding box con respecto a las reales,  el error en la probabilidad de clase predicha comparada con la clase verdadera del objeto y la  confianza predicha comparada con la puntuación real. La función de pérdida global suma estos tres valores. Posteriormente, luego de acumular todos los valores de pérdidas globales se calculan los gradientes con respecto a los pesos de la red utilizando el algoritmo de retropropagación y los pesos de la red se actualizan utilizando un optimizador (como Adam o SGD) para minimizar la función de pérdida [16].
+        <li><strong>Backpropagation (Retropropagación) y Optimización.</strong>Con la triada de valores (Coordenadas del
+            bounding box, clase, valor de confianza), se realiza el cálculo de los errores respectivos: desviación
+            estándar en el centro, ancho y altura del bounding box con respecto a las reales, el error en la
+            probabilidad de clase predicha comparada con la clase verdadera del objeto y la confianza predicha comparada
+            con la puntuación real. La función de pérdida global suma estos tres valores. Posteriormente, luego de
+            acumular todos los valores de pérdidas globales se calculan los gradientes con respecto a los pesos de la
+            red utilizando el algoritmo de retropropagación y los pesos de la red se actualizan utilizando un
+            optimizador (como Adam o SGD) para minimizar la función de pérdida [16].
         </li>
 
     </ol>
