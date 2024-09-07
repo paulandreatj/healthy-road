@@ -1,24 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>Conclusiones</title>
 </head>
+
 <body>
     <p><a href="index.html">&laquo; Índice</a></p>
     <h1>Conclusiones</h1>
     <p>
-        <ul>
-            <li>Para entrenar de manera efectiva el modelo de inteligencia artificial, se necesitaban imágenes de muestra 
-                que reflejaran con precisión las condiciones de las carreteras en Colombia. Imágenes de carreteras de India, que presentan 
-                características similares a las de Colombia, resultaron ser una valiosa fuente de datos. Estas imágenes permitieron al modelo aprender 
-                a detectar y clasificar daños de manera precisa, garantizando que el sistema pudiera generalizar adecuadamente y aplicar sus capacidades de 
-                reconocimiento a las infraestructuras viales colombianas.
-            </li>
-        </ul>
+    <ul>
+        <li>-> Para entrenar de manera efectiva el modelo de inteligencia artificial, se necesitaban imágenes de muestra
+            que reflejaran con precisión las condiciones de las carreteras en Colombia. Imágenes de carreteras de India,
+            que presentan
+            características similares a las de Colombia, resultaron ser una valiosa fuente de datos. Estas imágenes
+            permitieron al modelo aprender
+            a detectar y clasificar daños de manera precisa, garantizando que el sistema pudiera generalizar
+            adecuadamente y aplicar sus capacidades de
+            reconocimiento a las infraestructuras viales colombianas.
+        </li>
+        <br>
+        <li>-> El proyecto Healthy Road ha permitido al equipo aplicar la inteligencia artificial para resolver un problema
+            crítico en el mantenimiento y seguridad de las carreteras en Colombia, a través del desarrollado una
+            herramienta capaz de detectar y clasificar daños en las vías, optimizando los procesos de mantenimiento.
+            Este trabajo demuestra cómo la tecnología puede tener un impacto positivo en la infraestructura del país,
+            contribuyendo a la seguridad vial y mejorando la eficiencia en la gestión de las carreteras.</li>
+            <br>
+        <li>
+            -> Fue posible hacer una prueba de concepto apoyándonos de tecnologías existentes y modelos pre-entrenados con fine Fine-Tunning
+            en relativamente un período corto de tiempo y con buenos resultados de efectividad. Fue posible clasificar los 4 tipos de 
+            daños:  D00 (Longitudinal Crack), D10 (Transverse Crack), D20 (Alligator Crack), and D40 (Potholes).
+        </li>
+        <br>
+        <li>
+            -> El modelo muestra un desempeño sólido al localizar e identificar la mayoría de los objetos con una precisión del 75.7% en las bounding boxes comparadas con las coordenadas reales, aunque en algunas clases, como D11, la precisión baja al 50%. A pesar de tener una mayor precisión que recall, lo que sugiere que el modelo prefiere evitar falsos positivos, se detectan el 63.4% de los objetos de interés. El modelo mantiene un equilibrio del 73.1% entre precisión y recall con un IoU del 50%, y presenta un valor promedio de 0.49 considerando umbrales de IoU más estrictos, lo que indica la necesidad de un mayor ajuste para mejorar la precisión en niveles altos.
+        </li>
+        <br>
+        <li>-> El modelo presenta dificultades para distinguir correctamente entre los tipos de daños en carretera y el fondo de la imagen, particularmente en las clases D10 y D00, que tienen alta concurrencia y problemas de clasificación con el background. Además, la clase D0w0 fue erróneamente clasificada como D20 en lugar de D00. Cerca del 60% de los datos de las clases Block crack y Repair no fueron correctamente clasificados, y entre un 20% y 40% de las clasificaciones de varias clases (D10, D00, D20, D40, Block crack, D01, y D11) se confunden con el fondo, lo que sugiere que el ruido en las imágenes afecta el rendimiento del modelo.</li>
+    </ul>
     </p>
     <p><a href="index.html">&laquo; Índice</a></p>
 </body>
+
 </html>
