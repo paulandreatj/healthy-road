@@ -1,14 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>Metodología de IA</title>
 </head>
+
 <body>
     <p><a href="index.html">&laquo; Índice</a></p>
     <h1>Metodología de IA</h1>
+
+    <p>
+        Existen un conjunto de metodologías y enfoques que pueden apoyar a este problema, en particular, debido al
+        conjunto de imágenes encontrados de entrenamiento [9], se pensó en una estructuración robusta del modelo, por lo
+        que se optará por utilizar un modelo de Vision Transformer (ViT) que busca tener un comportamiento parecido al
+        Transformer implementado en procesamiento de lenguaje natural, pero para imágenes. En específico, se buscará
+        realizar un Fine Tuning a un modelo YOLO, es decir realizar un entrenamiento sobre un modelo pre-entrenado.
+    </p>
+
+    <h2>ViT.</h2>
+
+    <p>
+        Para realizar el entrenamiento de un modelo ViT, se mostrará de manera secuencial, qué recorrido realiza a una
+        imagen en particular.
+    </p>
+
+    <ol>
+        <li>
+            <strong>Patching.</strong>
+            Divide la imagen en “parches”, con un tamaño de parches 16 x 16 y son aplanados en un vector 16 x 16 x C,
+            siendo C, el número de canales de la imagen. Por ejemplo: Si la imagen es de 224 x 244 RGB, se obtienen 196
+            parches en total [10] con dimensión 768.
+        </li>
+        <br>
+        <li>
+            <strong>Embedding.</strong>
+            Similar al comportamiento de los transformers, a cada parche se le hace un embedding lineal de dimensión D,
+            donde D es un hiper parámetro del modelo ViT, y es el que representa la capacidad del modelo de adquirir
+            características complejas o con imágenes con ruido en una imagen [11]. Los valores usuales en D, varían
+            dependiendo la configuración inicial de ViT: ViT-Base: 𝐷=768; Para ViT-Large: 𝐷=1024; Para ViT-Huge: 𝐷 =
+            1280 [12].
+        </li>
+        <br>
+        <li>
+            <strong>Adición del Token de Clasificación.</strong>
+            A cada vector embeding se le concatena al inicio un token de clasificación (CLS) inicialmente dado por cero,
+            es token cambia a medida que se va transcurriendo el entrenamiento [10].
+        </li>
+        <br>
+        <li>
+            <strong>Adición de Positional Encodings.</strong>
+            A cada vector embeding con token CLS, se suma un vector posicional para que el modelo pueda aprender la
+            posición relativa de cada parche en la imagen [13].
+        </li>
+        <br>
+        <li>
+            <strong>Entrada al Transformer Encoder.</strong>
+            Cada vector embeding con token CLS sumado con su vector posicional se introduce hacia el encoder transformer
+            que está compuesta por capas de Self.Atenttion, Multi-Head y feed-forward totalmente conectadas:
+
+            <ul>
+                <li>-> Self.Atenttion y Multi-Head: Permite al modelo aprender relaciones de largo alcance entre los
+                    parches. a través de una matriz de atención que representa la importancia de cada parche con
+                    respecto a los demás.</li>
+                <li>-> Feed-forward: Luego de aplicar una normalización por capas a los resultados del ítem anterior, se
+                    pasa a través de una red neuronal completamente conectada, normalmente con una función de activación
+                    no lineal (ReLU o GELU), seguida de otra normalización por capas y conexión residual [10]. Este
+                    proceso se repite por cada capa en el encoder.</li>
+            </ul>
+        </li>
+        <br>
+        <li>
+            <strong>Extracción del Token de Clasificación.</strong>
+            Luego de pasar por cada una de las capas del encoder (12-14 capas [10]), a cada vector embedding con token
+            CLS sumado con su vector posicional, se obtiene el token CLS que pasa por una capa Softmax para obtener la
+            probabilidad de pertenecer a una clase [14].
+        </li>
+        <br>
+        <li>
+            <strong>Actualización de Pesos y Optimización.</strong>
+            Con la salida del modelo se comparan las etiquetas verdaderas de la imagen para calcular el valor de la
+            función de pérdida, se realiza retropropagación para ajustar los pesos del modelo utilizando un optimizador
+            (por ejemplo, Adam o SGD), sos pesos del modelo se actualizan utilizando algoritmos de optimización basados
+            en el gradiente (como Adam o SGD), y se repiten los pasos de forward pass y backpropagation para cada lote
+            de datos hasta que se complete el número de épocas de entrenamiento [15].
+        </li>
+
+    </ol>
+
+
+    <h2>YOLOS.</h2>
+
+    <p>En este caso, se realizó la implementación de Fine-Tunning a dos arquitecturas de YOLOS: </p>
+
+    <ol>
+        <li>Usando el modelo “hustvl/yolos-small” de la librería YolosImageProcessor de transformers [16]. Utilizando
+            fotos de carreteras de Japón, Noruega e India disponibles en [9], dicha arquitectura se le hará referencia
+            como yolos-small.</li>
+        <br>
+        <li>Usando el modelo “yolov8s.pt”, utilizando todas las fotos disponibles para entrenar en [9].</li>
+    </ol>
+
+    <p>Antes de explicar la arquitectura del modelo, se deben establecer las diferencias entre los modelos trabajados,
+        debido a que sus estructuras son semejantes, poseen enfoques diferentes que afectan desde su procesamiento hasta
+        su entrenamiento, dichas diferencias se mostrarán en la siguiente tabla.</p>
+
+
+    <table border="1">
+        <caption><strong>Diferencias entre yolov8s y yolos-small</strong></caption>
+        <tr>
+            <th>Nombre</th>
+            <th>Arquitectura</th>
+            <th>Aplicación</th>
+        </tr>
+        <tr>
+            <td>yolov8s</td>
+            <td>Es la última iteración del modelo YOLO a la fecha, donde se enfoca en la eficiencia y uso de la CNNs para extracción de características [17].</td>
+            <td>Ideal para aplicaciones en tiempo real y casos donde se necesita un buen equilibrio entre precisión y velocidad [17].</td>
+        </tr>
+        <tr>
+            <td>yolos-small</td>
+            <td>Más parecido a la estructura inicial de YOLOS buscando la manera de detectar como DETR [16]</td>
+            <td>Aprovecha la capacidad de los transformers para modelar relaciones espaciales complejas [16].</td>
+        </tr>
+
+        <p>Teniendo presente las diferencias anteriores, se mostrará, con una imagen en particular, cuál es el proceso de aprendizaje de esta arquitectura:</p>
+        
+    </table>
+
+
+
+
+
+
     <p><a href="index.html">&laquo; Índice</a></p>
 </body>
+
 </html>
