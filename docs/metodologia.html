@@ -14,7 +14,7 @@
 
     <p>
         Existen un conjunto de metodologías y enfoques que pueden apoyar a este problema, en particular, debido al
-        conjunto de imágenes encontrados de entrenamiento [9], se pensó en una estructuración robusta del modelo, por lo
+        conjunto de imágenes encontrados de entrenamiento <a href="referencias.html#ref9">[9]</a>, se pensó en una estructuración robusta del modelo, por lo
         que se optará por utilizar un modelo de Vision Transformer (ViT) que busca tener un comportamiento parecido al
         Transformer implementado en procesamiento de lenguaje natural, pero para imágenes. En específico, se buscará
         realizar un Fine Tuning a un modelo YOLO, es decir realizar un entrenamiento sobre un modelo pre-entrenado.
@@ -32,28 +32,28 @@
             <strong>Patching.</strong>
             Divide la imagen en “parches”, con un tamaño de parches 16 x 16 y son aplanados en un vector 16 x 16 x C,
             siendo C, el número de canales de la imagen. Por ejemplo: Si la imagen es de 224 x 244 RGB, se obtienen 196
-            parches en total [10] con dimensión 768.
+            parches en total <a href="referencias.html#ref10">[10]</a> con dimensión 768.
         </li>
         <br>
         <li>
             <strong>Embedding.</strong>
             Similar al comportamiento de los transformers, a cada parche se le hace un embedding lineal de dimensión D,
             donde D es un hiper parámetro del modelo ViT, y es el que representa la capacidad del modelo de adquirir
-            características complejas o con imágenes con ruido en una imagen [11]. Los valores usuales en D, varían
+            características complejas o con imágenes con ruido en una imagen <a href="referencias.html#ref11">[11]</a>. Los valores usuales en D, varían
             dependiendo la configuración inicial de ViT: ViT-Base: 𝐷=768; Para ViT-Large: 𝐷=1024; Para ViT-Huge: 𝐷 =
-            1280 [12].
+            1280 <a href="referencias.html#ref12">[12]</a>.
         </li>
         <br>
         <li>
             <strong>Adición del Token de Clasificación.</strong>
             A cada vector embeding se le concatena al inicio un token de clasificación (CLS) inicialmente dado por cero,
-            es token cambia a medida que se va transcurriendo el entrenamiento [10].
+            es token cambia a medida que se va transcurriendo el entrenamiento <a href="referencias.html#ref10">[10]</a>.
         </li>
         <br>
         <li>
             <strong>Adición de Positional Encodings.</strong>
             A cada vector embeding con token CLS, se suma un vector posicional para que el modelo pueda aprender la
-            posición relativa de cada parche en la imagen [13].
+            posición relativa de cada parche en la imagen <a href="referencias.html#ref13">[13]</a>.
         </li>
         <br>
         <li>
@@ -67,7 +67,7 @@
                     respecto a los demás.</li>
                 <li>-> Feed-forward: Luego de aplicar una normalización por capas a los resultados del ítem anterior, se
                     pasa a través de una red neuronal completamente conectada, normalmente con una función de activación
-                    no lineal (ReLU o GELU), seguida de otra normalización por capas y conexión residual [10]. Este
+                    no lineal (ReLU o GELU), seguida de otra normalización por capas y conexión residual <a href="referencias.html#ref10">[10]</a>. Este
                     proceso se repite por cada capa en el encoder.</li>
             </ul>
         </li>
@@ -76,7 +76,7 @@
             <strong>Extracción del Token de Clasificación.</strong>
             Luego de pasar por cada una de las capas del encoder (12-14 capas [10]), a cada vector embedding con token
             CLS sumado con su vector posicional, se obtiene el token CLS que pasa por una capa Softmax para obtener la
-            probabilidad de pertenecer a una clase [14].
+            probabilidad de pertenecer a una clase <a href="referencias.html#ref14">[14]</a>.
         </li>
         <br>
         <li>
@@ -85,12 +85,12 @@
             función de pérdida, se realiza retropropagación para ajustar los pesos del modelo utilizando un optimizador
             (por ejemplo, Adam o SGD), sos pesos del modelo se actualizan utilizando algoritmos de optimización basados
             en el gradiente (como Adam o SGD), y se repiten los pasos de forward pass y backpropagation para cada lote
-            de datos hasta que se complete el número de épocas de entrenamiento [15].
+            de datos hasta que se complete el número de épocas de entrenamiento <a href="referencias.html#ref15">[15]</a>.
         </li>
 
     </ol>
     <br>
-    <p>Se puede apreciar la arquitectura de ViT en la siguiente imagen, sacada del paper original [10]</p>
+    <p>Se puede apreciar la arquitectura de ViT en la siguiente imagen, sacada del paper original <a href="referencias.html#ref10">[10]</a></p>
 
     <figure>
         <img src="images/vit_architecture.jpg" alt="arquitectura-ViT" width="900" height="500">
@@ -104,11 +104,11 @@
     <p>En este caso, se realizó la implementación de Fine-Tunning a dos arquitecturas de YOLOS: </p>
 
     <ol>
-        <li>Usando el modelo “hustvl/yolos-small” de la librería YolosImageProcessor de transformers [16]. Utilizando
-            fotos de carreteras de Japón, Noruega e India disponibles en [9], dicha arquitectura se le hará referencia
+        <li>Usando el modelo “hustvl/yolos-small” de la librería YolosImageProcessor de transformers <a href="referencias.html#ref16">[16]</a>. Utilizando
+            fotos de carreteras de Japón, Noruega e India disponibles en <a href="referencias.html#ref9">[9]</a>, dicha arquitectura se le hará referencia
             como yolos-small.</li>
         <br>
-        <li>Usando el modelo “yolov8s.pt”, utilizando todas las fotos disponibles para entrenar en [9].</li>
+        <li>Usando el modelo “yolov8s.pt”, utilizando todas las fotos disponibles para entrenar en <a href="referencias.html#ref9">[9]</a>.</li>
     </ol>
 
     <p>Antes de explicar la arquitectura del modelo, se deben establecer las diferencias entre los modelos trabajados,
@@ -126,14 +126,14 @@
         <tr>
             <td>yolov8s</td>
             <td>Es la última iteración del modelo YOLO a la fecha, donde se enfoca en la eficiencia y uso de la CNNs
-                para extracción de características [17].</td>
+                para extracción de características <a href="referencias.html#ref17">[17]</a>.</td>
             <td>Ideal para aplicaciones en tiempo real y casos donde se necesita un buen equilibrio entre precisión y
-                velocidad [17].</td>
+                velocidad <a href="referencias.html#ref17">[17]</a>.</td>
         </tr>
         <tr>
             <td>yolos-small</td>
-            <td>Más parecido a la estructura inicial de YOLOS buscando la manera de detectar como DETR [16]</td>
-            <td>Aprovecha la capacidad de los transformers para modelar relaciones espaciales complejas [16].</td>
+            <td>Más parecido a la estructura inicial de YOLOS buscando la manera de detectar como DETR <a href="referencias.html#ref16">[16]</a></td>
+            <td>Aprovecha la capacidad de los transformers para modelar relaciones espaciales complejas <a href="referencias.html#ref16">[16]</a>.</td>
         </tr>
 
 
@@ -145,26 +145,26 @@
     <ol>
         <li><strong>Preparación de Datos.</strong>Se debe contar con una imagen y, las clases y bounding boxes (con
             formato x, y, w, h, estandarizados a la imagen original) correspondientes de dicha imagen. Estas tendrán un
-            tamaño fijo de resolución, desde 512 x 512 hasta 874 x 874 [17].</li>
+            tamaño fijo de resolución, desde 512 x 512 hasta 874 x 874 <a href="referencias.html#ref17">[17]</a>.</li>
         <br>
         <li><strong>División de la Imagen en Cuadrículas.</strong>División de la Imagen en Cuadrículas.</li>
         <br>
         <li><strong>Forward Pass (Pasada hacia Adelante). </strong>Con cada una de las celdas de la imagen se establece
             una tubería de transformación, donde la diferencia entre yolov8s y yolos-small es que en el Head, antes de
-            obtener predicciones, pasa por más capaz de convolución [17] buscando realizar un barrido más detallado
+            obtener predicciones, pasa por más capaz de convolución <a href="referencias.html#ref17">[17]</a> buscando realizar un barrido más detallado
             buscando predecir la clase con una mayor confianza. Aún con esto ambos modelos realizar el siguiente Forward
             Pass:
             <ol type="a">
                 <li><strong>Backbone.</strong>Está compuesto por un conjunto de capas de redes neuronales
                     convolucionales que convierte cada celda de la imagen en mapas de características que capturan
-                    información sobre patrones, texturas y formas en diferentes niveles de profundidad [16]. </li>
+                    información sobre patrones, texturas y formas en diferentes niveles de profundidad <a href="referencias.html#ref16">[16]</a>. </li>
                 <li><strong>Neck</strong>A cada vector de características aplanado de cada celda de la imagen se le
                     realiza un path aggregation buscando mejorar la capacidad de la red para detectar objetos de
-                    diferentes escalas y combinar características de diferentes niveles de la red backbone [16] </li>
+                    diferentes escalas y combinar características de diferentes niveles de la red backbone <a href="referencias.html#ref16">[16]</a> </li>
                 <li><strong>Head. </strong>Con dicho vector de características, luego de la pasada de Neck de cada celda
                     de la imagen se realiza la regresión de las coordenadas del bounding box (x, y, w, h), calcula el
                     valor de confianza con respecto a la contención de una clase de interés en la bounding box, y
-                    predice la clase de cada uno de los bounding box [17].</li>
+                    predice la clase de cada uno de los bounding box <a href="referencias.html#ref17">[17]</a>.</li>
             </ol>
         </li>
         <br>
@@ -179,8 +179,13 @@
         </li>
 
     </ol>
-
-
+<p>
+    En la siguiente imagen podemos ver la arquitectura de YOLO v8, extraída de <a href="https://medium.com/@syedzahidali969/principles-of-yolov8-6a90564e16c3"> este artículo de Medium:</a>
+</p>
+<figure>
+    <img src="images/yolov8.jpg" alt="arquitectura-YOLO-v8" width="900" height="500">
+    <figcaption><strong>Arquitectura YOLO v8</strong></figcaption>
+</figure>
 
 
 
