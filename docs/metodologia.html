@@ -117,8 +117,10 @@
         </tr>
         <tr>
             <td>yolov8s</td>
-            <td>Es la última iteración del modelo YOLO a la fecha, donde se enfoca en la eficiencia y uso de la CNNs para extracción de características [17].</td>
-            <td>Ideal para aplicaciones en tiempo real y casos donde se necesita un buen equilibrio entre precisión y velocidad [17].</td>
+            <td>Es la última iteración del modelo YOLO a la fecha, donde se enfoca en la eficiencia y uso de la CNNs
+                para extracción de características [17].</td>
+            <td>Ideal para aplicaciones en tiempo real y casos donde se necesita un buen equilibrio entre precisión y
+                velocidad [17].</td>
         </tr>
         <tr>
             <td>yolos-small</td>
@@ -126,10 +128,42 @@
             <td>Aprovecha la capacidad de los transformers para modelar relaciones espaciales complejas [16].</td>
         </tr>
 
-        <p>Teniendo presente las diferencias anteriores, se mostrará, con una imagen en particular, cuál es el proceso de aprendizaje de esta arquitectura:</p>
-        
+
     </table>
 
+    <p>Teniendo presente las diferencias anteriores, se mostrará, con una imagen en particular, cuál es el proceso de
+        aprendizaje de esta arquitectura:</p>
+
+    <ol>
+        <li><strong>Preparación de Datos.</strong>Se debe contar con una imagen y, las clases y bounding boxes (con
+            formato x, y, w, h, estandarizados a la imagen original) correspondientes de dicha imagen. Estas tendrán un
+            tamaño fijo de resolución, desde 512 x 512 hasta 874 x 874 [17].</li>
+        <br>
+        <li><strong>División de la Imagen en Cuadrículas.</strong>División de la Imagen en Cuadrículas.</li>
+        <br>
+        <li><strong>Forward Pass (Pasada hacia Adelante). </strong>Con cada una de las celdas de la imagen se establece
+            una tubería de transformación, donde la diferencia entre yolov8s y yolos-small es que en el Head, antes de
+            obtener predicciones, pasa por más capaz de convolución [17] buscando realizar un barrido más detallado
+            buscando predecir la clase con una mayor confianza. Aún con esto ambos modelos realizar el siguiente Forward
+            Pass:
+            <ol type="a">
+                <li><strong>Backbone.</strong>Está compuesto por un conjunto de capas de redes neuronales
+                    convolucionales que convierte cada celda de la imagen en mapas de características que capturan
+                    información sobre patrones, texturas y formas en diferentes niveles de profundidad [16]. </li>
+                <li><strong>Neck</strong>A cada vector de características aplanado de cada celda de la imagen se le
+                    realiza un path aggregation buscando mejorar la capacidad de la red para detectar objetos de
+                    diferentes escalas y combinar características de diferentes niveles de la red backbone [16] </li>
+                <li><strong>Head. </strong>Con dicho vector de características, luego de la pasada de Neck de cada celda
+                    de la imagen se realiza la regresión de las coordenadas del bounding box (x, y, w, h), calcula el
+                    valor de confianza con respecto a la contención de una clase de interés en la bounding box, y
+                    predice la clase de cada uno de los bounding box [17].</li>
+            </ol>
+        </li>
+        <br>
+        <li><strong>Backpropagation (Retropropagación) y Optimización.</strong>Con la triada de valores (Coordenadas del bounding box, clase, valor de confianza), se realiza el cálculo de los errores respectivos: desviación estándar en el centro, ancho y altura del bounding box con respecto a las reales,  el error en la probabilidad de clase predicha comparada con la clase verdadera del objeto y la  confianza predicha comparada con la puntuación real. La función de pérdida global suma estos tres valores. Posteriormente, luego de acumular todos los valores de pérdidas globales se calculan los gradientes con respecto a los pesos de la red utilizando el algoritmo de retropropagación y los pesos de la red se actualizan utilizando un optimizador (como Adam o SGD) para minimizar la función de pérdida [16].
+        </li>
+
+    </ol>
 
 
 
